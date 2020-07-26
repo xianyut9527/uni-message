@@ -25,7 +25,7 @@
 			</view>
 		</view>
 		<!-- 全局message组件 -->
-		<q-message ref="message"></q-message>
+		<quick-message ref="message"></quick-message>
 		
 	</view>
 </template>

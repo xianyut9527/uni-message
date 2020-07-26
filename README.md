@@ -1,2 +1,76 @@
-# uni-message
- uniapp全局message/toast提示
+
+## 小巧灵活的全局message toast 消息提示
+**全局message toast 消息提示封装 自定义扩展强,默认icon为uni官方icon(如需添加其他icon可自行扩展)**
+
+## 使用说明
+### 组件引入 
+####man.js
+```javascript
+import Vue from 'vue'
+import App from './App'
+
+import message from '@/components/quick-message/quick-message.vue'
+Vue.component('quick-message',message);
+```
+#### 或者pages.json
+```javascript
+{
+	"easycom": {
+			"^quick-(.*)": "@/components/quick-$1/quick-$1.vue"
+	},
+	"pages": [...],
+	...
+}
+```
+
+2种引入方式任选一种都可以
+
+#### vm引入
+```html
+<template>
+ <view>
+   <view @click="showMessage">show</view>
+   <!-- 全局message组件 -->
+   <quick-message ref="message"></quick-message>
+ </view>
+</template>
+<script>
+export default {
+		data() {
+			return {
+			  ...
+			}
+		},
+		methods:{
+			showMessage(){ //显示message
+					let data = this.messageInfo;
+					this.$refs.message.show({
+						type:'warning', //String 默认default
+						msg:'点击了消息提示窗', //String 显示内容
+						icon:false, //Boolean|String 显示icon(false/true/string 默认显示icon)
+						mask:true, //Boolean 遮罩（默认false没有遮罩）
+						time:5000, //Number 默认3000
+						iconSize: 18, //Number 自定义icon大小(单位px 默认16)
+						textSize:32 //Number 自定义文本大小(单位rpx 默认28)
+					})
+				}
+		}
+}
+</script>
+...
+```
+如果想扩展icon可在icon处输入icon name 支持uni官方icon
+官方icon链接：<https://uniapp.dcloud.io/component/icon>
+
+### 基本使用
+```javascript
+    this.$refs.message.show({
+		 msg:'基础提示'
+	})
+```
+
+### 图片 Images
+![Pandao editor.md](https://s1.ax1x.com/2020/07/27/aConwq.md.jpg "Pandao editor.md")
+### License
+[MIT](https://opensource.org/licenses/MIT)
+### End
