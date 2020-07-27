@@ -1,7 +1,7 @@
 <template>
   <view class="quick-message">
 	<view class="quick-message-mask" v-for="(item,index) in msgList" :key="index" v-show="item.mask"></view>
-	<view class="quick-message-centre" :style="messageContentStyle">
+	<view class="quick-message-centre" :style="[messageAniStyle,centerStyle]">
 		<view class="quick-message-list" :class="['classList' + (index+1)]" v-for="(item,index) in msgList" :key="index">
 		  <view class="quick-message-list-child" :class="[item.type + '-message',item.class?item.class:'']">
 			   <view class="msg-child-content">
@@ -24,7 +24,10 @@
 			  time:3000, //默认message时长
 			  showCount:0, //显示message计数
 			  closeCount:0,
-			  messageContentStyle:null,
+			  centerStyle:{
+				  top:0
+			  },
+			  messageAniStyle:null,
 			  color:{
 				  success:'#67c23a',
 				  default:'#1989fa',
@@ -38,7 +41,16 @@
 				 error:'clear' 
 			  }
 			}
-		},	
+		},
+	    mounted(){
+		 let that = this;	
+		 uni.getSystemInfo({
+		        success: function(e) {
+					that.centerStyle.top = e.safeArea.top + 'px';
+				}
+		 })
+				
+		},
 		methods:{
           show(options){ 
 			/**
@@ -77,14 +89,14 @@
 			  let countBs = this.showCount?this.showCount:1;
 			  let messageList = await this.getClass("classList" + this.showCount);
 			  let yNum = -Number((messageList.height * countBs).toFixed(2));
-			  this.messageContentStyle = {
+			  this.messageAniStyle = {
 			  		transform: 'translate(-50%, '+yNum+'px)',
 			  		transition: 'all 0.3s'
 			  };
 			  setTimeout(()=>{  //动画延时
 			  	this.closeCount ++;
 				if(this.closeCount===this.showCount){
-					this.messageContentStyle = {};
+					this.messageAniStyle = {};
 					for(let c=0; c<this.showCount; c++){
 						this.msgList = this.msgList.map((item,index)=>{ //清空后续显示动画解决跳动
 							item.class = '';
@@ -173,7 +185,6 @@
 				transform: translate(0, 0);
 				}
 			}
-			
 	
 			/** 颜色主题 **/
 			.default-message{
