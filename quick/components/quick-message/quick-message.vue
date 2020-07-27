@@ -5,8 +5,8 @@
 		<view class="quick-message-list" :class="['classList' + (index+1)]" v-for="(item,index) in msgList" :key="index">
 		  <view class="quick-message-list-child" :class="[item.type + '-message',item.class?item.class:'']">
 			   <view class="msg-child-content">
-				 <icon class="msg-icon" :type="item.icon" :size="item.iconSize?item.iconSize:16" :color="item.iconColor?item.iconColor:''" v-if="item.icon"/>
-				 <text class="msg-text" :style="{fontSize:item.textSize + 'rpx'}">{{item.msg}}</text>  
+				 <icon class="msg-icon" :type="item.icon" :size="item.iconSize" :color="item.iconColor?item.iconColor:''" v-if="item.icon"/>
+				 <text class="msg-text" :style="{fontSize:item.textSize + 'rpx',color:item.textColor}">{{item.msg}}</text>  
 			   </view>
 
 		  </view>
@@ -25,7 +25,7 @@
 			  showCount:0, //显示message计数
 			  closeCount:0,
 			  messageContentStyle:null,
-			  iconColor:{
+			  color:{
 				  success:'#67c23a',
 				  default:'#1989fa',
 				  warning:'#e6a23c',
@@ -41,11 +41,17 @@
 		},	
 		methods:{
           show(options){ 
+			/**
+			 * 参数配置
+			 */  
 			options.type = options.type?options.type:'default';
 			options.class = 'show-message' //show
 			options.icon = options.icon===false?'':options.icon!==true&&options.icon?options.icon:this.icon[options.type];
-			options.iconColor = options.iconColor?options.iconColor:this.iconColor[options.type];
+			options.iconSize = options.iconSize?options.iconSize:16;
+			options.iconColor = options.iconColor?options.iconColor:this.color[options.type];
 			options.textSize = options.textSize?options.textSize:28;
+			options.textColor = options.textColor?options.textColor:options.type==='default'?'#606266':this.color[options.type];
+			
 			this.msgList.push(options);
 			this.closeMessage(options.time);
 		  },
@@ -80,7 +86,10 @@
 				if(this.closeCount===this.showCount){
 					this.messageContentStyle = {};
 					for(let c=0; c<this.showCount; c++){
-						this.msgList[1]?this.msgList[1].class = '':'';
+						this.msgList = this.msgList.map((item,index)=>{ //清空后续显示动画解决跳动
+							item.class = '';
+							return item;
+						})
 						this.msgList.shift();
 					}
 					this.mask = false;
@@ -169,19 +178,15 @@
 			/** 颜色主题 **/
 			.default-message{
 				background-color:#FFFFFF;
-				color:#606266;
 			}
 			.success-message{
 				background-color:#f0f9eb;
-				color:#67c23a;
 			}
 			.warning-message{
 				background-color:#fdf6ec;
-				color:#e6a23c;
 			}
 			.error-message{
 				background-color:#fef0f0;
-				color:#f56c6c;
 			}			
 		}
 							
