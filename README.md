@@ -51,7 +51,9 @@ export default {
 						mask:true, //Boolean 遮罩（默认false没有遮罩）
 						time:5000, //Number 默认3000
 						iconSize: 18, //Number 自定义icon大小(单位px 默认16)
-						textSize:32 //Number 自定义文本大小(单位rpx 默认28)
+						iconColor: '', //String icon颜色(默认主题颜色)
+						textSize:32, //Number 自定义文本大小(单位rpx 默认28)
+						textColor: '' //String 文本颜色(默认主题颜色)
 					})
 				}
 		}
