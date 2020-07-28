@@ -46,14 +46,17 @@ export default {
 					let data = this.messageInfo;
 					this.$refs.message.show({
 						type:'warning', //String 默认default
-						msg:'点击了消息提示窗', //String 显示内容
+						msg:'点击了消息提示窗', //String 显示内容 *
 						icon:false, //Boolean|String 显示icon(false/true/string 默认显示icon)
 						mask:true, //Boolean 遮罩（默认false没有遮罩）
 						time:5000, //Number 默认3000
 						iconSize: 18, //Number 自定义icon大小(单位px 默认16)
 						iconColor: '', //String icon颜色(默认主题颜色)
-						textSize:32, //Number 自定义文本大小(单位rpx 默认28)
-						textColor: '' //String 文本颜色(默认主题颜色)
+						customStyle:{
+						 fontSize:32, //Number|String (单位rpx)						 color:'#FFFFFF', //字体图标色
+						 backgroundColor:'#F96' //背景色
+						 ...
+						} //自定义样式
 					})
 				}
 		}
