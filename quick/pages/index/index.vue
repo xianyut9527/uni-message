@@ -14,12 +14,18 @@
 						 显示icon
 					  </view>
 				  </view>
-				  <view class="list mb100">
+				  <view class="list mb40">
 				  	  <view>
 				  		<switch @change="switchChange($event,'mask')" />
-						透明遮罩
+						遮罩
 				  	  </view>
 				  </view>
+<!-- 				  <view class="list mb100">
+				  	  <view>
+				  		<switch @change="switchChange($event,'respond')" />
+				  		等待响应
+				  	  </view>
+				  </view> -->
 				  <button type="primary" @click="showMessage">触发</button>
 				</view>
 			</view>
@@ -40,8 +46,11 @@
 				messageData:{
 					type:'default',
 					mask:false,
-					icon:true
+					icon:true,
+					respond:false //响应状态为true强制开启遮罩
 				},
+				initData:null,
+				idNumber:101,
 				radioList:[
 					{
 						title:'普通',
@@ -66,6 +75,9 @@
 		onLoad() {
 
 		},
+		created(){
+			this.initData = JSON.stringify(this.messageData);
+		},
 		methods: {
 			radioChange: function(evt) {
 						for (let i = 0; i < this.radioList.length; i++) {
@@ -78,20 +90,36 @@
 				this.messageData.type = evt.detail.value;
 			},
 			switchChange(e,type){
+				this.messageData = JSON.parse(this.initData);
 				let val = e.detail.value;
 				console.log(type,val);
+				val&&type === 'respond'?this.messageData.mask = true:'';
 				this.messageData[type] = val;
 				console.log(JSON.stringify(this.messageData));
 			},
 			showMessage(){ //显示message
 				let data = this.messageInfo;
+				this.idNumber ++
 				this.$refs.message.show({
+					id:this.idNumber, //响应数据需要设定
 					type:this.messageData.type, //默认default
-					msg:'点击了 ' + this.count ++ + ' 下', //显示内容
+					msg:!this.messageData.respond?('点击了 ' + this.count ++ + ' 下'):'5秒后数据返回,自动关闭。', //显示内容
 					icon:this.messageData.icon, //显示icon
 					mask:this.messageData.mask, //遮罩
-					time:5000 //默认3s
+					respond:this.messageData.respond //respond状态
 				})
+				if(this.messageData.respond){
+					setTimeout(()=>{
+						this.$refs.message.close(this.idNumber);
+					},5000)
+					this.$refs.message.show({
+						type:'warning',
+						msg:'注意响应开启时message需要设置id',
+						time:5000
+					})					
+				}
+				
+				
 			}
 		}
 	}

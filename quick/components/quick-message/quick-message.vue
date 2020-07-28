@@ -3,10 +3,10 @@
 	<view class="quick-message-mask" v-for="(item,index) in msgList" :key="index" v-show="item.mask"></view>
 	<view class="quick-message-centre" :style="[messageAniStyle,centerStyle]">
 		<view class="quick-message-list" :class="['classList' + (index+1)]" v-for="(item,index) in msgList" :key="index">
-		  <view class="quick-message-list-child" :class="[item.type + '-message',item.class?item.class:'']">
+		  <view class="quick-message-list-child" :style="item.customStyle" :class="[item.type + '-message',item.class?item.class:'']">
 			   <view class="msg-child-content">
-				 <icon class="msg-icon" :type="item.icon" :size="item.iconSize" :color="item.iconColor?item.iconColor:''" v-if="item.icon"/>
-				 <text class="msg-text" :style="{fontSize:item.textSize + 'rpx',color:item.textColor}">{{item.msg}}</text>  
+				 <icon class="msg-icon" :type="item.icon" :size="item.iconSize?item.iconSize:16" :color="item.iconColor?item.iconColor:''" v-if="item.icon"/>
+				 <text class="msg-text" :style="{fontSize:item.textSize,color:item.textColor}">{{item.msg}}</text>  
 			   </view>
 
 		  </view>
@@ -24,8 +24,9 @@
 			  time:3000, //默认message时长
 			  showCount:0, //显示message计数
 			  closeCount:0,
+			  closeList:[],
 			  centerStyle:{
-				  top:0
+				 top:0
 			  },
 			  messageAniStyle:null,
 			  color:{
@@ -59,13 +60,19 @@
 			options.type = options.type?options.type:'default';
 			options.class = 'show-message' //show
 			options.icon = options.icon===false?'':options.icon!==true&&options.icon?options.icon:this.icon[options.type];
-			options.iconSize = options.iconSize?options.iconSize:16;
-			options.iconColor = options.iconColor?options.iconColor:this.color[options.type];
-			options.textSize = options.textSize?options.textSize:28;
-			options.textColor = options.textColor?options.textColor:options.type==='default'?'#606266':this.color[options.type];
-			
+			if(options.customStyle&&options.customStyle.color){
+				!options.iconColor?options.iconColor = options.customStyle.color:'';
+				options.textColor = options.customStyle.color;
+			}
+			if(options.customStyle&&options.customStyle.fontSize){
+				let fontSizeNum = Number(options.customStyle.fontSize.toString().replace(/\D/g,''));
+				!options.iconSize?options.iconSize = parseInt(fontSizeNum/2.2):'';
+				options.textSize = fontSizeNum + 'rpx';
+			}
+			!options.iconColor?options.iconColor = this.color[options.type]:'';
+			!options.textColor?options.textColor = options.type==='default'?'#222222':this.color[options.type]:'';
 			this.msgList.push(options);
-			this.closeMessage(options.time);
+			this.closeMessage(options);
 		  },
 		  getClass(className){
 			return new Promise((resolve, rej) => {
@@ -76,8 +83,19 @@
 			           }).exec();  
 		    })
 		  },
-		  closeMessage(time){  
-			setTimeout(async ()=>{	
+		  closeMessage(options){  
+			let timeNum = options.time?options.time:this.time;  
+			if(options.respond){
+				this.closeList.push(options);
+				return;
+			}  
+			setTimeout(async ()=>{
+			  let dataA = [];
+			  let dataB = []; //不自动关闭数据
+			  this.msgList.forEach((item,index)=>{
+				item.respond?dataB.push(item):dataA.push(item); 
+			  })
+			  this.msgList = dataA.concat(dataB); 		
 			  let msgListLength = this.msgList.length-1;
 			  let msgListStr = JSON.stringify(this.msgList);
 			  this.msgList = this.msgList.map((item,index)=>{
@@ -110,8 +128,17 @@
 				}
 			  },300)
 			  	
-			},time?time:this.time)
+			},timeNum)
 			  
+		  },
+		  close(id){ //关闭指定层
+			this.closeList.forEach((item,index)=>{
+				if(item.id===id){
+					item.respond = false;
+					item.time = 10;
+					this.closeMessage(item);
+				}
+			})
 		  }
 		  
 		}
@@ -140,7 +167,7 @@
 		z-index:9999;
 		pointer-events: none;
 		background-color:transparent;
-		padding:40rpx 0;
+		padding:20rpx 0;
 		.quick-message-list{
             width:auto;
 			height:auto;
@@ -157,18 +184,23 @@
 				background-color:transparent;
 				opacity:1;
 				font-size:28rpx;
+				text-align:left;
 				.msg-child-content{
 					display:flex;
 					flex-direction:row;
 					align-items:center;
+					.msg-icon{
+						padding:0 8rpx;
+					}
 					.msg-text{
 						padding:0 10rpx;
+						font-size:28rpx;
 					}
 				}
 			}
 			.close-message{
 			   opacity:0;
-			   transition: all .3s;
+			   transition: all .2s;
 			}			
 			.show-message{
 			   animation: messageAni .3s;
