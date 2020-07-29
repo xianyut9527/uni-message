@@ -24,7 +24,8 @@
 			  time:3000, //默认message时长
 			  showCount:0, //显示message计数
 			  closeCount:0,
-			  closeList:[],
+			  id:101,
+			  closeInfo:{},
 			  centerStyle:{
 				 top:0
 			  },
@@ -57,6 +58,7 @@
 			/**
 			 * 参数配置
 			 */  
+			options.id = this.createId();
 			options.type = options.type?options.type:'default';
 			options.class = 'show-message' //show
 			options.icon = options.icon===false?'':options.icon!==true&&options.icon?options.icon:this.icon[options.type];
@@ -69,6 +71,7 @@
 				!options.iconSize?options.iconSize = parseInt(fontSizeNum/2.2):'';
 				options.textSize = fontSizeNum + 'rpx';
 			}
+			options.respond&&options.mask!==false?options.mask = true:'';
 			!options.iconColor?options.iconColor = this.color[options.type]:'';
 			!options.textColor?options.textColor = options.type==='default'?'#222222':this.color[options.type]:'';
 			this.msgList.push(options);
@@ -84,9 +87,9 @@
 		    })
 		  },
 		  closeMessage(options){  
-			let timeNum = options.time?options.time:this.time;  
-			if(options.respond){
-				this.closeList.push(options);
+			let timeNum = options.time?options.time:this.time;
+			if(options.respond&&!this.closeInfo[options.id]){
+				this.closeInfo[options.id] = options;
 				return;
 			}  
 			setTimeout(async ()=>{
@@ -95,9 +98,7 @@
 			  this.msgList.forEach((item,index)=>{
 				item.respond?dataB.push(item):dataA.push(item); 
 			  })
-			  this.msgList = dataA.concat(dataB); 		
-			  let msgListLength = this.msgList.length-1;
-			  let msgListStr = JSON.stringify(this.msgList);
+			  this.msgList = dataA.concat(dataB);
 			  this.msgList = this.msgList.map((item,index)=>{
 				  index<=this.showCount?item.class = 'close-message':'';
 				  return item;
@@ -122,7 +123,6 @@
 						})
 						this.msgList.shift();
 					}
-					this.mask = false;
 					this.showCount = 0;	
 					this.closeCount = 0;
 				}
@@ -131,14 +131,19 @@
 			},timeNum)
 			  
 		  },
+		  createId(){
+			this.id ++;
+			let id = this.id; 
+			return id;
+		  },
 		  close(id){ //关闭指定层
-			this.closeList.forEach((item,index)=>{
-				if(item.id===id){
-					item.respond = false;
-					item.time = 10;
-					this.closeMessage(item);
-				}
-			})
+		    if(id&&this.closeInfo[id]){
+			   let item = this.closeInfo[id];	
+			   item.time = 10;
+			   item.respond = false;
+			   this.closeMessage(item);
+			}
+			
 		  }
 		  
 		}
