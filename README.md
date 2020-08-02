@@ -74,7 +74,7 @@ export default {
 ```
 
 ### 图片 Images
-![Pandao editor.md](https://s1.ax1x.com/2020/07/27/aConwq.md.jpg "Pandao editor.md")
+![Pandao editor.md](https://s1.ax1x.com/2020/08/02/athExx.png "Pandao editor.md")
 ### License
 [MIT](https://opensource.org/licenses/MIT)
 ### End
