@@ -20,12 +20,13 @@
 						遮罩
 				  	  </view>
 				  </view>
-<!-- 				  <view class="list mb100">
+				  <view class="list mb100">
 				  	  <view>
-				  		<switch @change="switchChange($event,'respond')" />
-				  		等待响应
+				  		<switch @change="switchChange($event,'time')" checked/>
+				  		时间
 				  	  </view>
-				  </view> -->
+					  <input v-if="messageData.time" type="number" v-model="timeNum" class="uni-input" placeholder="输入时间" style="border:1px solid #CCCCCC; margin-top:30rpx;padding:10rpx;border-radius:10rpx;"/>
+				  </view>
 				  <button type="primary" @click="showMessage">触发</button>
 				</view>
 			</view>
@@ -43,11 +44,13 @@
 				title: 'Hello',
 				count:0,
 				current:0,
+				timeNum:3000,
 				messageData:{
 					type:'default',
 					mask:false,
 					icon:true,
-					respond:false //响应状态为true强制开启遮罩
+					respond:false,
+					time:true
 				},
 				radioList:[
 					{
@@ -73,6 +76,13 @@
 		onLoad() {
 
 		},
+		mounted(){
+/* 			setTimeout(()=>{
+				this.$refs.message.show({
+					msg:'hello world,hello world,hello world,hello world,hello world,hello world,hello world,hello world,hello world,hello world,hello world,hello world,hello world',
+				})
+			},1000) */
+		},
 		methods: {
 			radioChange: function(evt) {
 						for (let i = 0; i < this.radioList.length; i++) {
@@ -90,21 +100,40 @@
 				this.messageData[type] = val;
 			},
 			showMessage(){ //显示message
+			    let n = parseInt(100*Math.random());
+			    let ranStr = '点击了' + (this.count++) + '下';//this.fromCharCode(n<5?5:n);
 				this.$refs.message.show({
 					type:this.messageData.type, //默认default
-					msg:!this.messageData.respond?('点击了 ' + this.count ++ + ' 下'):'加载中...', //显示内容
+					msg:ranStr, //显示内容
 					icon:this.messageData.icon, //显示icon
 					mask:this.messageData.mask, //遮罩
-					respond:this.messageData.respond //respond状态
+					time:this.messageData.time?this.timeNum:false //无限期时间
 				})
-/* 				let id = this.$refs.message.id; //获取弹窗id,需要在弹出后获取
-				if(this.messageData.respond){
-					setTimeout(()=>{
-						this.$refs.message.close(id); //关闭某个弹窗
-					},5000)				
-				} */
+				let id = this.$refs.message.id; //获取弹窗id,需要在弹出后获取
+				if(this.messageData.time===false){
+					if(this.messageData.mask){
+						this.$refs.message.show({
+							type:'warning',
+							msg:'注意!! 当前遮罩已开启,不可点击,为了方便测试这里设置了10秒后关闭当前消息,你也可以关闭指定某个消息,详情查看说明文档及demo.',
+							time:10000
+						}) 
+						setTimeout(()=>{
+							this.$refs.message.close(id); //关闭某个弹窗
+						},10000)
+					}
+								
+				}
 				
 				
+			},
+			fromCharCode(num){
+				let str = '';
+				for(let i=0; i<num; i++){
+					let n = parseInt(90*Math.random());
+					let nb = n<65?65:n; 
+					str += String.fromCharCode(nb);
+				}
+				return str;
 			}
 		}
 	}

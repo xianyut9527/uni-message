@@ -43,20 +43,19 @@ export default {
 		},
 		methods:{
 			showMessage(){ //显示message
-					let data = this.messageInfo;
 					this.$refs.message.show({
 						type:'warning', //String 默认default
 						msg:'点击了消息提示窗', //String 显示内容 *
 						icon:false, //Boolean|String 显示icon(false/true/string 默认显示icon)
 						mask:true, //Boolean 遮罩（默认false没有遮罩）
-						time:5000, //Number 默认3000
-						iconSize: 18, //Number 自定义icon大小(单位px 默认16)
-						iconColor: '', //String icon颜色(默认主题颜色)
-						customStyle:{
+						time:5000, //Number|Boolean 默认3000/false为不自动关闭
+						customStyle:{ //自定义样式
 						 fontSize:32, //Number|String (单位rpx)						 color:'#FFFFFF', //字体图标色
 						 backgroundColor:'#F96' //背景色
 						 ...
-						} //自定义样式
+						}, 
+						iconSize: 18, //Number 自定义icon大小(单位px 默认16 设置后会覆盖自定义样式里的设置优先级最高)
+						iconColor: '', //String icon颜色(默认主题颜色 设置后会覆盖自定义样式里的设置优先级最高)
 					})
 				}
 		}

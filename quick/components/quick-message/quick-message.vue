@@ -22,9 +22,12 @@
 			return {	
 			  msgList:[], //消息列表
 			  time:3000, //默认message时长
-			  showCount:0, //显示message计数
-			  closeCount:0,
+			  count:{  //计数器
+				start:0, 
+				end:0
+			  },
 			  id:101,
+			  elHeight:[], //elHeight
 			  closeInfo:{},
 			  centerStyle:{
 				 top:0
@@ -71,10 +74,10 @@
 				!options.iconSize?options.iconSize = parseInt(fontSizeNum/2.2):'';
 				options.textSize = fontSizeNum + 'rpx';
 			}
-			options.respond&&options.mask!==false?options.mask = true:'';
 			!options.iconColor?options.iconColor = this.color[options.type]:'';
 			!options.textColor?options.textColor = options.type==='default'?'#222222':this.color[options.type]:'';
 			this.msgList.push(options);
+			this.closeInfo[options.id] = options;
 			this.closeMessage(options);
 		  },
 		  getClass(className){
@@ -87,44 +90,45 @@
 		    })
 		  },
 		  closeMessage(options){  
-			let timeNum = options.time?options.time:this.time;
-			if(options.respond&&!this.closeInfo[options.id]){
-				this.closeInfo[options.id] = options;
+			let timeNum = !isNaN(Number(options.time))?Number(options.time):this.time;  
+			if(options.time===false){
 				return;
-			}  
+			}
 			setTimeout(async ()=>{
 			  let dataA = [];
 			  let dataB = []; //不自动关闭数据
 			  this.msgList.forEach((item,index)=>{
-				item.respond?dataB.push(item):dataA.push(item); 
+				item.time===false?dataB.push(item):dataA.push(item); 
 			  })
 			  this.msgList = dataA.concat(dataB);
 			  this.msgList = this.msgList.map((item,index)=>{
-				  index<=this.showCount?item.class = 'close-message':'';
+				  index<=this.count.start?item.class = 'close-message':'';
 				  return item;
 			  })
 			  this.msgList.push();
-			  this.showCount ++;
-			  let countBs = this.showCount?this.showCount:1;
-			  let messageList = await this.getClass("classList" + this.showCount);
-			  let yNum = -Number((messageList.height * countBs).toFixed(2));
+			  this.count.start ++;
+			  let messageList = await this.getClass("classList" + this.count.start);
+			  this.elHeight.push(messageList.height);
+			  let elHeight = this.elHeight.reduce(function(a,b){
+				  return Number((a+b).toFixed(2))
+			  })
+			  let yNum = -elHeight;
 			  this.messageAniStyle = {
 			  		transform: 'translate(-50%, '+yNum+'px)',
-			  		transition: 'all 0.3s'
+			  		transition: 'all 0.4s'
 			  };
 			  setTimeout(()=>{  //动画延时
-			  	this.closeCount ++;
-				if(this.closeCount===this.showCount){
+			  	this.count.end ++;
+				if(this.count.start===this.count.end){
 					this.messageAniStyle = {};
-					for(let c=0; c<this.showCount; c++){
-						this.msgList = this.msgList.map((item,index)=>{ //清空后续显示动画解决跳动
-							item.class = '';
-							return item;
-						})
-						this.msgList.shift();
-					}
-					this.showCount = 0;	
-					this.closeCount = 0;
+					this.msgList = this.msgList.map((item,index)=>{ //清空后续显示动画解决跳动
+						item.class = '';
+						return item;
+					})
+					this.msgList.splice(0,this.count.start);
+					this.elHeight.splice(0,this.count.start);
+					this.count.start = 0;	
+					this.count.end = 0;
 				}
 			  },300)
 			  	
@@ -140,7 +144,6 @@
 		    if(id&&this.closeInfo[id]){
 			   let item = this.closeInfo[id];	
 			   item.time = 10;
-			   item.respond = false;
 			   this.closeMessage(item);
 			}
 			
@@ -159,7 +162,7 @@
 		position:fixed;
 		top:0;
 		left:0;
-		z-index:9999;
+		z-index:9999998;
 		background-color:transparent;
 	}
 	.quick-message-centre{
@@ -169,10 +172,10 @@
 		top:0;
 		left:50%;
 		transform:translate(-50%,0);
-		z-index:9999;
+		z-index:9999999;
 		pointer-events: none;
 		background-color:transparent;
-		padding:20rpx 0;
+		padding:20rpx;
 		.quick-message-list{
             width:auto;
 			height:auto;
@@ -205,7 +208,7 @@
 			}
 			.close-message{
 			   opacity:0;
-			   transition: all .2s;
+			   transition: all .4s;
 			}			
 			.show-message{
 			   animation: messageAni .3s;
