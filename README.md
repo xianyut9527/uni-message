@@ -50,7 +50,8 @@ export default {
 						mask:true, //Boolean 遮罩（默认false没有遮罩）
 						time:5000, //Number|Boolean 默认3000/false为不自动关闭
 						customStyle:{ //自定义样式
-						 fontSize:32, //Number|String (单位rpx)						 color:'#FFFFFF', //字体图标色
+						 fontSize:'32rpx', //Number|String (字体图标大小 单位rpx)
+						 color:'#FFFFFF', //字体图标色
 						 backgroundColor:'#F96' //背景色
 						 ...
 						}, 
@@ -69,12 +70,14 @@ export default {
 ### 基本使用
 ```javascript
     this.$refs.message.show({
-		 msg:'基础提示'
+		 msg:'点击了0下'
 	})
 ```
 
 ### 图片 Images
 ![Pandao editor.md](https://s1.ax1x.com/2020/08/02/athExx.png "Pandao editor.md")
+
+
 ### License
 [MIT](https://opensource.org/licenses/MIT)
 ### End
