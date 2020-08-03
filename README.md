@@ -1,6 +1,6 @@
 
 ## 小巧灵活的全局message toast 消息提示
-**全局message toast 消息提示封装 自定义扩展强,默认icon为uni官方icon(如需添加其他icon可自行扩展)**
+**全局message toast 消息提示 自定义扩展强,默认icon为uni官方icon(如需添加其他icon可自行扩展)**
 
 ## 使用说明
 ### 组件引入 
@@ -77,6 +77,8 @@ export default {
 ### 图片 Images
 ![Pandao editor.md](https://s1.ax1x.com/2020/08/02/athExx.png "Pandao editor.md")
 
+> 如果觉得好用欢迎star：<https://github.com/southernTone/uni-message>
+> @southernTone
 
 ### License
 [MIT](https://opensource.org/licenses/MIT)
