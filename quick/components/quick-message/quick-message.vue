@@ -51,7 +51,7 @@
 		 let that = this;	
 		 uni.getSystemInfo({
 		        success: function(e) {
-					that.centerStyle.top = e.safeArea.top + 'px';
+					that.centerStyle.top = (e.safeArea.top + 30) + 'px';
 				}
 		 })
 				
@@ -108,7 +108,7 @@
 			  this.msgList.push();
 			  this.count.start ++;
 			  let messageList = await this.getClass("classList" + this.count.start);
-			  this.elHeight.push(messageList.height);
+			  this.elHeight.push(messageList?messageList.height:41);
 			  let elHeight = this.elHeight.reduce(function(a,b){
 				  return Number((a+b).toFixed(2))
 			  })
