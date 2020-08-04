@@ -51,7 +51,7 @@
 		 let that = this;	
 		 uni.getSystemInfo({
 		        success: function(e) {
-					that.centerStyle.top = (e.safeArea.top + 30) + 'px';
+					that.centerStyle.top = e.safeArea.top + 'px';
 				}
 		 })
 				
