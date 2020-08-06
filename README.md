@@ -83,7 +83,6 @@ export default {
 | iconSize   |   number   |  16 |  number  | icon大小 (优先级最高 单位px) |
 | iconColor   |   string   |  默认为消息提示类型主题色 |  string  | icon颜色 (优先级最高) |
 
-> 如果觉得好用欢迎star：<https://github.com/southernTone/uni-message>
 
 
 ### 图片 Images
