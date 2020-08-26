@@ -3,7 +3,7 @@
 	<view class="quick-message-mask" v-for="(item,index) in msgList" :key="index" v-show="item.mask"></view>
 	<view class="quick-message-centre" :style="[messageAniStyle,centerStyle]">
 		<view class="quick-message-list" :class="['classList' + (index+1)]" v-for="(item,index) in msgList" :key="index">
-		  <view class="quick-message-list-child" :style="item.customStyle" :class="[item.type + '-message',item.class?item.class:'']">
+		  <view class="quick-message-list-child" :style="[item.customStyle]" :class="[item.type + '-message',item.class?item.class:'']">
 			   <view class="msg-child-content">
 				 <icon class="msg-icon" :type="item.icon" :size="item.iconSize?item.iconSize:16" :color="item.iconColor?item.iconColor:''" v-if="item.icon"/>
 				 <text class="msg-text" :style="{fontSize:item.textSize,color:item.textColor}">{{item.msg}}</text>  
@@ -81,12 +81,11 @@
 			this.closeMessage(options);
 		  },
 		  getClass(className){
-			return new Promise((resolve, rej) => {
-			 uni.createSelectorQuery().select('.' + className).fields({
-			               size: true
-			           }, (data) => {
-			              resolve(data);
-			           }).exec();  
+			 const query = uni.createSelectorQuery().in(this);
+			 return new Promise((resolve, rej) => {
+				 query.select('.' + className).boundingClientRect(data => {
+					resolve(data);
+				 }).exec();  
 		    })
 		  },
 		  closeMessage(options){  
@@ -95,8 +94,7 @@
 				return;
 			}
 			setTimeout(async ()=>{
-			  let dataA = [];
-			  let dataB = []; //不自动关闭数据
+			  let dataA = [],dataB = []; //不自动关闭数据
 			  this.msgList.forEach((item,index)=>{
 				item.time===false?dataB.push(item):dataA.push(item); 
 			  })

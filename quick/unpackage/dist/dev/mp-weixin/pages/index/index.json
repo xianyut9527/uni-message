@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "quick-message",
+  "usingComponents": {
+    "quick-message": "/components/quick-message/quick-message"
+  }
+}

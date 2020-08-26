@@ -108,6 +108,10 @@
 					icon:this.messageData.icon, //显示icon
 					mask:this.messageData.mask, //遮罩
 					time:this.messageData.time?this.timeNum:false //无限期时间
+/* 					customStyle:{ //自定义样式
+                        color:'#FFFFFF', //字体图标色
+                        backgroundColor:'rgba(0,0,0,.5)' //背景色
+					} */
 				})
 				let id = this.$refs.message.id; //获取弹窗id,需要在弹出后获取
 				if(this.messageData.time===false){
