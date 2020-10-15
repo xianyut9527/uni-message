@@ -46,6 +46,7 @@ export default {
 					this.$refs.message.show({
 							type:'default', //String 默认default
 							msg:'点击了消息提示窗', //String 显示内容 *
+							direction:'top', //String 默认顶部显示
 							icon:true, //Boolean|String 显示icon(false/true/string 默认显示icon)
 							mask:true, //Boolean 遮罩（默认false没有遮罩）
 							time:5000, //Number|Boolean 默认3000/false为不自动关闭
@@ -76,6 +77,7 @@ export default {
 | :-----:   | :-----:  | :-----:  | :-----:  | :-----  |
 | type      | string   |   default     |  default/success/warning/error     |  消息提示类型     |
 | msg         |   string           |       |       |   提示消息             |
+| direction     |   string           |  top     |   top/center/bottom    |   显示方向             |
 | icon        |   boolean/string   |  true |  true/fasle/success/info/...  |消息提示icon详情参见https://uniapp.dcloud.io/component/icon 默认为true根据消息类型系统默认icon |
 | mask         |   boolean           |   false    |   true/false    |  消息提示遮罩,打开后需要等上一个消息关闭后才能继续点击或其他事件行为        |
 | time        |   boolean/number   |  3000 |  true/fasle/number  | 消息提示时间 true为默认3000毫秒，false为关闭时间 (单位毫秒)|
