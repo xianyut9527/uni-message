@@ -2,6 +2,7 @@
   <view class="quick-message">
 	<view class="quick-message-mask" v-for="(item,index) in msgList" :key="index" v-show="item.mask"></view>
 	<view class="quick-message-centre" :style="[messageAniStyle,centerStyle]">
+		<view class="safeHeight" :style="{height:safeHeight + 'px'}"></view>
 		<view class="quick-message-list" :class="['classList' + (index+1)]" v-for="(item,index) in msgList" :key="index">
 		  <view class="quick-message-list-child" :style="[item.customStyle]" :class="[item.type + '-message',item.class?item.class:'']">
 			   <view class="msg-child-content">
@@ -11,6 +12,7 @@
 
 		  </view>
 	    </view>
+		<view class="safeHeight" :style="{height:safeHeight + 'px'}"></view>
 	</view>
 	
   </view>
@@ -28,9 +30,10 @@
 			  },
 			  id:101,
 			  elHeight:[], //elHeight
+			  direction:'top', //方向
 			  closeInfo:{},
 			  centerStyle:{
-				 top:0
+				 top:'5%'
 			  },
 			  messageAniStyle:null,
 			  color:{
@@ -44,14 +47,15 @@
 				 default:'info',
 				 warning:'warn',
 				 error:'clear' 
-			  }
+			  },
+			  safeHeight:0,
 			}
 		},
 	    mounted(){
 		 let that = this;	
 		 uni.getSystemInfo({
 		        success: function(e) {
-					that.centerStyle.top = e.safeArea.top + 'px';
+					that.safeHeight = e.safeArea.top + 'px';
 				}
 		 })
 				
@@ -63,7 +67,7 @@
 			 */  
 			options.id = this.createId();
 			options.type = options.type?options.type:'default';
-			options.class = 'show-message' //show
+			this.direction = options.direction || 'top'; //默认顶部显示
 			options.icon = options.icon===false?'':options.icon!==true&&options.icon?options.icon:this.icon[options.type];
 			if(options.customStyle&&options.customStyle.color){
 				!options.iconColor?options.iconColor = options.customStyle.color:'';
@@ -76,9 +80,31 @@
 			}
 			!options.iconColor?options.iconColor = this.color[options.type]:'';
 			!options.textColor?options.textColor = options.type==='default'?'#222222':this.color[options.type]:'';
-			this.msgList.push(options);
-			this.closeInfo[options.id] = options;
-			this.closeMessage(options);
+			switch(this.direction){ //方向处理
+				case 'top':
+					this.centerStyle = {top:'5%'};
+					options.class = 'show-message'; //当前显示动画效果
+				break;
+				case 'center':
+				    this.centerStyle = {top:'inherit',bottom:'50%'};
+					options.class = 'show-message-reverse'; //当前显示动画效果
+				break;
+				case 'bottom':
+				    this.centerStyle = {top:'inherit',bottom:'10%'};
+					options.class = 'show-message-reverse'; //当前显示动画效果
+				break;
+				default:
+			}
+			this.msgList.map((item,index)=>{  //清空之前动画
+				item.class = item.class.replace(/(show-message)(-reverse)?/,''); 
+				return item;
+			})
+			setTimeout(()=>{
+				this.direction==='top'?this.msgList.push(options):this.msgList.unshift(options);
+				this.closeInfo[options.id] = options;
+				this.closeMessage(options);
+			},50)
+			
 		  },
 		  getClass(className){
 			 const query = uni.createSelectorQuery().in(this);
@@ -99,18 +125,32 @@
 				item.time===false?dataB.push(item):dataA.push(item); 
 			  })
 			  this.msgList = dataA.concat(dataB);
+			  let msgListLen = this.msgList.length; //list长度
+			  let lastLen = msgListLen-1-this.count.start;
 			  this.msgList = this.msgList.map((item,index)=>{
-				  index<=this.count.start?item.class = 'close-message':'';
+				  if(this.direction==='top'){
+					 index<=this.count.start?item.class = 'close-message':''; 
+				  }else{
+					 index>=lastLen?item.class = 'close-message':'';  
+				  }
+				  
 				  return item;
 			  })
 			  this.msgList.push();
 			  this.count.start ++;
-			  let messageList = await this.getClass("classList" + this.count.start);
+			  let messageList = null;
+			  if(this.direction==='top'){
+				messageList = await this.getClass("classList" + this.count.start);
+			  }else{
+				let lastListIdx = this.msgList.length;
+				messageList = await this.getClass("classList" + lastListIdx);  
+			  }
 			  this.elHeight.push(messageList?messageList.height:41);
+			   
 			  let elHeight = this.elHeight.reduce(function(a,b){
 				  return Number((a+b).toFixed(2))
 			  })
-			  let yNum = -elHeight;
+			  let yNum = this.direction==='top'?-elHeight:elHeight;
 			  this.messageAniStyle = {
 			  		transform: 'translate(-50%, '+yNum+'px)',
 			  		transition: 'all 0.4s'
@@ -123,8 +163,16 @@
 						item.class = '';
 						return item;
 					})
-					this.msgList.splice(0,this.count.start);
-					this.elHeight.splice(0,this.count.start);
+					console.log(this.count.start);
+					let msgListLen = this.msgList.length-1;
+					if(this.direction==='top'){
+						this.msgList.splice(0,this.count.start);
+						this.elHeight.splice(0,this.count.start);
+					}else{
+						this.msgList.splice(-this.count.start,this.count.start);
+						this.elHeight.splice(-this.count.start,this.count.start);
+					}
+					
 					this.count.start = 0;	
 					this.count.end = 0;
 				}
@@ -211,6 +259,9 @@
 			.show-message{
 			   animation: messageAni .3s;
 			}
+			.show-message-reverse{
+			   animation: messageAniReverse .3s;
+			}
 			/** show **/
 			@keyframes messageAni
 			{
@@ -220,7 +271,18 @@
 			   }
 			100% {
 				opacity:1;
-				transform: translate(0, 0);
+				transform: translate(0, 0rpx);
+				}
+			}
+			@keyframes messageAniReverse
+			{
+			0% {
+				opacity:0;
+				transform: translate(0, 60rpx);
+			   }
+			100% {
+				opacity:1;
+				transform: translate(0, 0rpx);
 				}
 			}
 	

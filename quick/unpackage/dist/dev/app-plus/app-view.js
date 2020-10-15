@@ -286,11 +286,56 @@ var render = function() {
                     { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
                     [
                       _c(
+                        "v-uni-radio-group",
+                        {
+                          attrs: { _i: 9 },
+                          on: {
+                            change: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        _vm._l(_vm._$g(10, "f"), function(
+                          item,
+                          index,
+                          $21,
+                          $31
+                        ) {
+                          return _c(
+                            "v-uni-label",
+                            {
+                              key: item,
+                              staticClass: _vm._$g("10-" + $31, "sc"),
+                              attrs: { _i: "10-" + $31 }
+                            },
+                            [
+                              _c("v-uni-radio", {
+                                attrs: {
+                                  value: _vm._$g("11-" + $31, "a-value"),
+                                  checked: _vm._$g("11-" + $31, "a-checked"),
+                                  _i: "11-" + $31
+                                }
+                              }),
+                              _vm._v(_vm._$g("10-" + $31, "t1-0"))
+                            ],
+                            1
+                          )
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+                    [
+                      _c(
                         "v-uni-view",
-                        { attrs: { _i: 9 } },
+                        { attrs: { _i: 13 } },
                         [
                           _c("v-uni-switch", {
-                            attrs: { checked: true, _i: 10 },
+                            attrs: { checked: true, _i: 14 },
                             on: {
                               change: function($event) {
                                 return _vm.$handleViewEvent($event)
@@ -306,14 +351,14 @@ var render = function() {
                   ),
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
+                    { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
                     [
                       _c(
                         "v-uni-view",
-                        { attrs: { _i: 12 } },
+                        { attrs: { _i: 16 } },
                         [
                           _c("v-uni-switch", {
-                            attrs: { _i: 13 },
+                            attrs: { _i: 17 },
                             on: {
                               change: function($event) {
                                 return _vm.$handleViewEvent($event)
@@ -329,14 +374,14 @@ var render = function() {
                   ),
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
+                    { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
                     [
                       _c(
                         "v-uni-view",
-                        { attrs: { _i: 15 } },
+                        { attrs: { _i: 19 } },
                         [
                           _c("v-uni-switch", {
-                            attrs: { checked: true, _i: 16 },
+                            attrs: { checked: true, _i: 20 },
                             on: {
                               change: function($event) {
                                 return _vm.$handleViewEvent($event)
@@ -347,9 +392,9 @@ var render = function() {
                         ],
                         1
                       ),
-                      _vm._$g(17, "i")
+                      _vm._$g(21, "i")
                         ? _c("v-uni-input", {
-                            staticClass: _vm._$g(17, "sc"),
+                            staticClass: _vm._$g(21, "sc"),
                             staticStyle: {
                               border: "1px solid #CCCCCC",
                               "margin-top": "30rpx",
@@ -359,12 +404,12 @@ var render = function() {
                             attrs: {
                               type: "number",
                               placeholder: "输入时间",
-                              _i: 17
+                              _i: 21
                             },
                             model: {
-                              value: _vm._$g(17, "v-model"),
+                              value: _vm._$g(21, "v-model"),
                               callback: function($$v) {
-                                _vm.$handleVModelEvent(17, $$v)
+                                _vm.$handleVModelEvent(21, $$v)
                               },
                               expression: "timeNum"
                             }
@@ -376,7 +421,7 @@ var render = function() {
                   _c(
                     "v-uni-button",
                     {
-                      attrs: { type: "primary", _i: 18 },
+                      attrs: { type: "primary", _i: 22 },
                       on: {
                         click: function($event) {
                           return _vm.$handleViewEvent($event)
@@ -394,7 +439,7 @@ var render = function() {
         ],
         1
       ),
-      _c("quick-message", { ref: "message", attrs: { _i: 19 } })
+      _c("quick-message", { ref: "message", attrs: { _i: 23 } })
     ],
     1
   )
@@ -511,63 +556,75 @@ var render = function() {
           style: _vm._$g(2, "s"),
           attrs: { _i: 2 }
         },
-        _vm._l(_vm._$g(3, "f"), function(item, index, $21, $31) {
-          return _c(
-            "v-uni-view",
-            {
-              key: item,
-              staticClass: _vm._$g("3-" + $31, "sc"),
-              class: _vm._$g("3-" + $31, "c"),
-              attrs: { _i: "3-" + $31 }
-            },
-            [
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g("4-" + $31, "sc"),
-                  class: _vm._$g("4-" + $31, "c"),
-                  style: _vm._$g("4-" + $31, "s"),
-                  attrs: { _i: "4-" + $31 }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g("5-" + $31, "sc"),
-                      attrs: { _i: "5-" + $31 }
-                    },
-                    [
-                      _vm._$g("6-" + $31, "i")
-                        ? _c("v-uni-icon", {
-                            staticClass: _vm._$g("6-" + $31, "sc"),
-                            attrs: {
-                              type: _vm._$g("6-" + $31, "a-type"),
-                              size: _vm._$g("6-" + $31, "a-size"),
-                              color: _vm._$g("6-" + $31, "a-color"),
-                              _i: "6-" + $31
-                            }
-                          })
-                        : _vm._e(),
-                      _c(
-                        "v-uni-text",
-                        {
-                          staticClass: _vm._$g("7-" + $31, "sc"),
-                          style: _vm._$g("7-" + $31, "s"),
-                          attrs: { _i: "7-" + $31 }
-                        },
-                        [_vm._v(_vm._$g("7-" + $31, "t0-0"))]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        }),
-        1
+        [
+          _c("v-uni-view", {
+            staticClass: _vm._$g(3, "sc"),
+            style: _vm._$g(3, "s"),
+            attrs: { _i: 3 }
+          }),
+          _vm._l(_vm._$g(4, "f"), function(item, index, $21, $31) {
+            return _c(
+              "v-uni-view",
+              {
+                key: item,
+                staticClass: _vm._$g("4-" + $31, "sc"),
+                class: _vm._$g("4-" + $31, "c"),
+                attrs: { _i: "4-" + $31 }
+              },
+              [
+                _c(
+                  "v-uni-view",
+                  {
+                    staticClass: _vm._$g("5-" + $31, "sc"),
+                    class: _vm._$g("5-" + $31, "c"),
+                    style: _vm._$g("5-" + $31, "s"),
+                    attrs: { _i: "5-" + $31 }
+                  },
+                  [
+                    _c(
+                      "v-uni-view",
+                      {
+                        staticClass: _vm._$g("6-" + $31, "sc"),
+                        attrs: { _i: "6-" + $31 }
+                      },
+                      [
+                        _vm._$g("7-" + $31, "i")
+                          ? _c("v-uni-icon", {
+                              staticClass: _vm._$g("7-" + $31, "sc"),
+                              attrs: {
+                                type: _vm._$g("7-" + $31, "a-type"),
+                                size: _vm._$g("7-" + $31, "a-size"),
+                                color: _vm._$g("7-" + $31, "a-color"),
+                                _i: "7-" + $31
+                              }
+                            })
+                          : _vm._e(),
+                        _c(
+                          "v-uni-text",
+                          {
+                            staticClass: _vm._$g("8-" + $31, "sc"),
+                            style: _vm._$g("8-" + $31, "s"),
+                            attrs: { _i: "8-" + $31 }
+                          },
+                          [_vm._v(_vm._$g("8-" + $31, "t0-0"))]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          }),
+          _c("v-uni-view", {
+            staticClass: _vm._$g(9, "sc"),
+            style: _vm._$g(9, "s"),
+            attrs: { _i: 9 }
+          })
+        ],
+        2
       )
     ],
     2
@@ -661,7 +718,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 13);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.quick-message[data-v-8f4c3658] {\r\n  background-color: transparent;\n}\n.quick-message .quick-message-mask[data-v-8f4c3658] {\r\n  width: 100%;\r\n  height: 100vh;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  z-index: 9999998;\r\n  background-color: transparent;\n}\n.quick-message .quick-message-centre[data-v-8f4c3658] {\r\n  width: 80%;\r\n  height: auto;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 50%;\r\n  -webkit-transform: translate(-50%, 0);\r\n          transform: translate(-50%, 0);\r\n  z-index: 9999999;\r\n  pointer-events: none;\r\n  background-color: transparent;\r\n  padding: 20rpx;\n}\n.quick-message .quick-message-centre .quick-message-list[data-v-8f4c3658] {\r\n  width: auto;\r\n  height: auto;\r\n  text-align: center;\r\n  /** show **/\r\n  /** 颜色主题 **/\n}\n.quick-message .quick-message-centre .quick-message-list .quick-message-list-child[data-v-8f4c3658] {\r\n  display: inline-block;\r\n  word-break: break-all;\r\n  word-wrap: break-word;\r\n  padding: 10rpx 20rpx;\r\n  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);\r\n  border-radius: 10rpx;\r\n  margin-top: 25rpx;\r\n  pointer-events: auto;\r\n  background-color: transparent;\r\n  opacity: 1;\r\n  font-size: 28rpx;\r\n  text-align: left;\n}\n.quick-message .quick-message-centre .quick-message-list .quick-message-list-child .msg-child-content[data-v-8f4c3658] {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.quick-message .quick-message-centre .quick-message-list .quick-message-list-child .msg-child-content .msg-icon[data-v-8f4c3658] {\r\n  padding: 0 8rpx;\n}\n.quick-message .quick-message-centre .quick-message-list .quick-message-list-child .msg-child-content .msg-text[data-v-8f4c3658] {\r\n  padding: 0 10rpx;\r\n  font-size: 28rpx;\n}\n.quick-message .quick-message-centre .quick-message-list .close-message[data-v-8f4c3658] {\r\n  opacity: 0;\r\n  -webkit-transition: all .4s;\r\n  transition: all .4s;\n}\n.quick-message .quick-message-centre .quick-message-list .show-message[data-v-8f4c3658] {\r\n  -webkit-animation: messageAni-data-v-8f4c3658 .3s;\r\n          animation: messageAni-data-v-8f4c3658 .3s;\n}\n@-webkit-keyframes messageAni-data-v-8f4c3658 {\n0% {\r\n    opacity: 0;\r\n    -webkit-transform: translate(0, -60rpx);\r\n            transform: translate(0, -60rpx);\n}\n100% {\r\n    opacity: 1;\r\n    -webkit-transform: translate(0, 0);\r\n            transform: translate(0, 0);\n}\n}\n@keyframes messageAni-data-v-8f4c3658 {\n0% {\r\n    opacity: 0;\r\n    -webkit-transform: translate(0, -60rpx);\r\n            transform: translate(0, -60rpx);\n}\n100% {\r\n    opacity: 1;\r\n    -webkit-transform: translate(0, 0);\r\n            transform: translate(0, 0);\n}\n}\n.quick-message .quick-message-centre .quick-message-list .default-message[data-v-8f4c3658] {\r\n  background-color: #FFFFFF;\n}\n.quick-message .quick-message-centre .quick-message-list .success-message[data-v-8f4c3658] {\r\n  background-color: #f0f9eb;\n}\n.quick-message .quick-message-centre .quick-message-list .warning-message[data-v-8f4c3658] {\r\n  background-color: #fdf6ec;\n}\n.quick-message .quick-message-centre .quick-message-list .error-message[data-v-8f4c3658] {\r\n  background-color: #fef0f0;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.quick-message[data-v-8f4c3658] {\r\n  background-color: transparent;\n}\n.quick-message .quick-message-mask[data-v-8f4c3658] {\r\n  width: 100%;\r\n  height: 100vh;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  z-index: 9999998;\r\n  background-color: transparent;\n}\n.quick-message .quick-message-centre[data-v-8f4c3658] {\r\n  width: 80%;\r\n  height: auto;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 50%;\r\n  -webkit-transform: translate(-50%, 0);\r\n          transform: translate(-50%, 0);\r\n  z-index: 9999999;\r\n  pointer-events: none;\r\n  background-color: transparent;\r\n  padding: 20rpx;\n}\n.quick-message .quick-message-centre .quick-message-list[data-v-8f4c3658] {\r\n  width: auto;\r\n  height: auto;\r\n  text-align: center;\r\n  /** show **/\r\n  /** 颜色主题 **/\n}\n.quick-message .quick-message-centre .quick-message-list .quick-message-list-child[data-v-8f4c3658] {\r\n  display: inline-block;\r\n  word-break: break-all;\r\n  word-wrap: break-word;\r\n  padding: 10rpx 20rpx;\r\n  -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);\r\n          box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);\r\n  -webkit-border-radius: 10rpx;\r\n          border-radius: 10rpx;\r\n  margin-top: 25rpx;\r\n  pointer-events: auto;\r\n  background-color: transparent;\r\n  opacity: 1;\r\n  font-size: 28rpx;\r\n  text-align: left;\n}\n.quick-message .quick-message-centre .quick-message-list .quick-message-list-child .msg-child-content[data-v-8f4c3658] {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.quick-message .quick-message-centre .quick-message-list .quick-message-list-child .msg-child-content .msg-icon[data-v-8f4c3658] {\r\n  padding: 0 8rpx;\n}\n.quick-message .quick-message-centre .quick-message-list .quick-message-list-child .msg-child-content .msg-text[data-v-8f4c3658] {\r\n  padding: 0 10rpx;\r\n  font-size: 28rpx;\n}\n.quick-message .quick-message-centre .quick-message-list .close-message[data-v-8f4c3658] {\r\n  opacity: 0;\r\n  -webkit-transition: all .4s;\r\n  transition: all .4s;\n}\n.quick-message .quick-message-centre .quick-message-list .show-message[data-v-8f4c3658] {\r\n  -webkit-animation: messageAni-data-v-8f4c3658 .3s;\r\n          animation: messageAni-data-v-8f4c3658 .3s;\n}\n.quick-message .quick-message-centre .quick-message-list .show-message-reverse[data-v-8f4c3658] {\r\n  -webkit-animation: messageAniReverse-data-v-8f4c3658 .3s;\r\n          animation: messageAniReverse-data-v-8f4c3658 .3s;\n}\n@-webkit-keyframes messageAni-data-v-8f4c3658 {\n0% {\r\n    opacity: 0;\r\n    -webkit-transform: translate(0, -60rpx);\r\n            transform: translate(0, -60rpx);\n}\n100% {\r\n    opacity: 1;\r\n    -webkit-transform: translate(0, 0rpx);\r\n            transform: translate(0, 0rpx);\n}\n}\n@keyframes messageAni-data-v-8f4c3658 {\n0% {\r\n    opacity: 0;\r\n    -webkit-transform: translate(0, -60rpx);\r\n            transform: translate(0, -60rpx);\n}\n100% {\r\n    opacity: 1;\r\n    -webkit-transform: translate(0, 0rpx);\r\n            transform: translate(0, 0rpx);\n}\n}\n@-webkit-keyframes messageAniReverse-data-v-8f4c3658 {\n0% {\r\n    opacity: 0;\r\n    -webkit-transform: translate(0, 60rpx);\r\n            transform: translate(0, 60rpx);\n}\n100% {\r\n    opacity: 1;\r\n    -webkit-transform: translate(0, 0rpx);\r\n            transform: translate(0, 0rpx);\n}\n}\n@keyframes messageAniReverse-data-v-8f4c3658 {\n0% {\r\n    opacity: 0;\r\n    -webkit-transform: translate(0, 60rpx);\r\n            transform: translate(0, 60rpx);\n}\n100% {\r\n    opacity: 1;\r\n    -webkit-transform: translate(0, 0rpx);\r\n            transform: translate(0, 0rpx);\n}\n}\n.quick-message .quick-message-centre .quick-message-list .default-message[data-v-8f4c3658] {\r\n  background-color: #FFFFFF;\n}\n.quick-message .quick-message-centre .quick-message-list .success-message[data-v-8f4c3658] {\r\n  background-color: #f0f9eb;\n}\n.quick-message .quick-message-centre .quick-message-list .warning-message[data-v-8f4c3658] {\r\n  background-color: #fdf6ec;\n}\n.quick-message .quick-message-centre .quick-message-list .error-message[data-v-8f4c3658] {\r\n  background-color: #fef0f0;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1010,6 +1067,8 @@ var UPX_RE = /([+-]?\d+(\.\d+)?)[r|u]px/g
 var VAR_STATUS_BAR_HEIGHT = /var\(--status-bar-height\)/gi
 var VAR_WINDOW_TOP = /var\(--window-top\)/gi
 var VAR_WINDOW_BOTTOM = /var\(--window-bottom\)/gi
+var VAR_WINDOW_LEFT = /var\(--window-left\)/gi
+var VAR_WINDOW_RIGHT = /var\(--window-right\)/gi
 
 var statusBarHeight = false
 function processCss(css) {
@@ -1025,6 +1084,8 @@ function processCss(css) {
 		css = css.replace(VAR_STATUS_BAR_HEIGHT, offset.statusBarHeight + 'px')
 			.replace(VAR_WINDOW_TOP, offset.top + 'px')
 			.replace(VAR_WINDOW_BOTTOM, offset.bottom + 'px')
+            .replace(VAR_WINDOW_LEFT, '0px')
+            .replace(VAR_WINDOW_RIGHT, '0px')
 	}
   return css.replace(/\{[\s\S]+?\}/g, function (css) {
     return css.replace(UPX_RE, function (a, b) {

@@ -84,10 +84,12 @@ var render = function() {
   var s0 = _vm.__get_style([_vm.messageAniStyle, _vm.centerStyle])
 
   var l0 = _vm.__map(_vm.msgList, function(item, index) {
+    var $orig = _vm.__get_orig(item)
+
     var s1 = _vm.__get_style([item.customStyle])
 
     return {
-      $orig: _vm.__get_orig(item),
+      $orig: $orig,
       s1: s1
     }
   })
@@ -134,7 +136,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+//
+//
 //
 //
 //
@@ -164,9 +168,10 @@ var _default =
 
       id: 101,
       elHeight: [], //elHeight
+      direction: 'top', //方向
       closeInfo: {},
       centerStyle: {
-        top: 0 },
+        top: '5%' },
 
       messageAniStyle: null,
       color: {
@@ -179,27 +184,28 @@ var _default =
         success: 'success',
         default: 'info',
         warning: 'warn',
-        error: 'clear' } };
+        error: 'clear' },
 
+      safeHeight: 0 };
 
   },
   mounted: function mounted() {
     var that = this;
     uni.getSystemInfo({
       success: function success(e) {
-        that.centerStyle.top = e.safeArea.top + 'px';
+        that.safeHeight = e.safeArea.top + 'px';
       } });
 
 
   },
   methods: {
-    show: function show(options) {
+    show: function show(options) {var _this = this;
       /**
-                                   * 参数配置
-                                   */
+                                                     * 参数配置
+                                                     */
       options.id = this.createId();
       options.type = options.type ? options.type : 'default';
-      options.class = 'show-message'; //show
+      this.direction = options.direction || 'top'; //默认顶部显示
       options.icon = options.icon === false ? '' : options.icon !== true && options.icon ? options.icon : this.icon[options.type];
       if (options.customStyle && options.customStyle.color) {
         !options.iconColor ? options.iconColor = options.customStyle.color : '';
@@ -212,9 +218,31 @@ var _default =
       }
       !options.iconColor ? options.iconColor = this.color[options.type] : '';
       !options.textColor ? options.textColor = options.type === 'default' ? '#222222' : this.color[options.type] : '';
-      this.msgList.push(options);
-      this.closeInfo[options.id] = options;
-      this.closeMessage(options);
+      switch (this.direction) {//方向处理
+        case 'top':
+          this.centerStyle = { top: '5%' };
+          options.class = 'show-message'; //当前显示动画效果
+          break;
+        case 'center':
+          this.centerStyle = { top: 'inherit', bottom: '50%' };
+          options.class = 'show-message-reverse'; //当前显示动画效果
+          break;
+        case 'bottom':
+          this.centerStyle = { top: 'inherit', bottom: '10%' };
+          options.class = 'show-message-reverse'; //当前显示动画效果
+          break;
+        default:}
+
+      this.msgList.map(function (item, index) {//清空之前动画
+        item.class = item.class.replace(/(show-message)(-reverse)?/, '');
+        return item;
+      });
+      setTimeout(function () {
+        _this.direction === 'top' ? _this.msgList.push(options) : _this.msgList.unshift(options);
+        _this.closeInfo[options.id] = options;
+        _this.closeMessage(options);
+      }, 50);
+
     },
     getClass: function getClass(className) {
       var query = uni.createSelectorQuery().in(this);
@@ -224,47 +252,69 @@ var _default =
         }).exec();
       });
     },
-    closeMessage: function closeMessage(options) {var _this = this;
+    closeMessage: function closeMessage(options) {var _this2 = this;
       var timeNum = !isNaN(Number(options.time)) ? Number(options.time) : this.time;
       if (options.time === false) {
         return;
       }
-      setTimeout( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var dataA, dataB, messageList, elHeight, yNum;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+      setTimeout( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var dataA, dataB, msgListLen, lastLen, messageList, lastListIdx, elHeight, yNum;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 dataA = [], dataB = []; //不自动关闭数据
-                _this.msgList.forEach(function (item, index) {
+                _this2.msgList.forEach(function (item, index) {
                   item.time === false ? dataB.push(item) : dataA.push(item);
                 });
-                _this.msgList = dataA.concat(dataB);
-                _this.msgList = _this.msgList.map(function (item, index) {
-                  index <= _this.count.start ? item.class = 'close-message' : '';
+                _this2.msgList = dataA.concat(dataB);
+                msgListLen = _this2.msgList.length; //list长度
+                lastLen = msgListLen - 1 - _this2.count.start;
+                _this2.msgList = _this2.msgList.map(function (item, index) {
+                  if (_this2.direction === 'top') {
+                    index <= _this2.count.start ? item.class = 'close-message' : '';
+                  } else {
+                    index >= lastLen ? item.class = 'close-message' : '';
+                  }
+
                   return item;
                 });
-                _this.msgList.push();
-                _this.count.start++;_context.next = 8;return (
-                  _this.getClass("classList" + _this.count.start));case 8:messageList = _context.sent;
-                _this.elHeight.push(messageList ? messageList.height : 41);
-                elHeight = _this.elHeight.reduce(function (a, b) {
+                _this2.msgList.push();
+                _this2.count.start++;
+                messageList = null;if (!(
+                _this2.direction === 'top')) {_context.next = 15;break;}_context.next = 12;return (
+                  _this2.getClass("classList" + _this2.count.start));case 12:messageList = _context.sent;_context.next = 19;break;case 15:
+
+                lastListIdx = _this2.msgList.length;_context.next = 18;return (
+                  _this2.getClass("classList" + lastListIdx));case 18:messageList = _context.sent;case 19:
+
+                _this2.elHeight.push(messageList ? messageList.height : 41);
+
+                elHeight = _this2.elHeight.reduce(function (a, b) {
                   return Number((a + b).toFixed(2));
                 });
-                yNum = -elHeight;
-                _this.messageAniStyle = {
+                yNum = _this2.direction === 'top' ? -elHeight : elHeight;
+                _this2.messageAniStyle = {
                   transform: 'translate(-50%, ' + yNum + 'px)',
                   transition: 'all 0.4s' };
 
                 setTimeout(function () {//动画延时
-                  _this.count.end++;
-                  if (_this.count.start === _this.count.end) {
-                    _this.messageAniStyle = {};
-                    _this.msgList = _this.msgList.map(function (item, index) {//清空后续显示动画解决跳动
+                  _this2.count.end++;
+                  if (_this2.count.start === _this2.count.end) {
+                    _this2.messageAniStyle = {};
+                    _this2.msgList = _this2.msgList.map(function (item, index) {//清空后续显示动画解决跳动
                       item.class = '';
                       return item;
                     });
-                    _this.msgList.splice(0, _this.count.start);
-                    _this.elHeight.splice(0, _this.count.start);
-                    _this.count.start = 0;
-                    _this.count.end = 0;
+                    console.log(_this2.count.start);
+                    var _msgListLen = _this2.msgList.length - 1;
+                    if (_this2.direction === 'top') {
+                      _this2.msgList.splice(0, _this2.count.start);
+                      _this2.elHeight.splice(0, _this2.count.start);
+                    } else {
+                      _this2.msgList.splice(-_this2.count.start, _this2.count.start);
+                      _this2.elHeight.splice(-_this2.count.start, _this2.count.start);
+                    }
+
+                    _this2.count.start = 0;
+                    _this2.count.end = 0;
                   }
-                }, 300);case 14:case "end":return _context.stop();}}}, _callee);})),
+                }, 300);case 24:case "end":return _context.stop();}}}, _callee);})),
 
       timeNum);
 

@@ -4,10 +4,15 @@
 			<view style="padding:50rpx 0;">
 				<view class="uni-padding-wrap uni-common-mt">
 				  <view class="list mb40">
-					<radio-group @change="radioChange">
+						<radio-group @change="radioChange($event,1)">
+							<label class="radio mr20" v-for="(item,index) in directionList" :key="index"><radio :value="item.direction" :checked="item.checked" />{{ item.title }}</label>
+						</radio-group>  
+				  </view>
+				  <view class="list mb40">
+					<radio-group @change="radioChange($event,2)">
 						<label class="radio mr20" v-for="(item,index) in radioList" :key="index"><radio :value="item.type" :checked="item.checked" />{{ item.title }}</label>
 					</radio-group>  
-				  </view>	
+				  </view>
                   <view class="list mb40">
 					  <view>
 					    <switch @change="switchChange($event,'icon')" checked/>
@@ -50,7 +55,8 @@
 					mask:false,
 					icon:true,
 					respond:false,
-					time:true
+					time:true,
+					direction:'top'
 				},
 				radioList:[
 					{
@@ -70,6 +76,21 @@
 						type:'error',
 						title:'错误'
 					}					
+				],
+				directionList:[
+					{
+					 direction:'top',
+					 title:'上',
+					 checked:true	  
+					},
+					{
+					 direction:'center',
+					 title:'中'	 
+					},
+					{
+					 direction:'bottom',
+					 title:'下'	 
+					}
 				]
 			}
 		},
@@ -84,15 +105,20 @@
 			},1000) */
 		},
 		methods: {
-			radioChange: function(evt) {
+			radioChange: function(evt,index) {
+				    if(index===2){
 						for (let i = 0; i < this.radioList.length; i++) {
 							if (this.radioList[i].value === evt.target.value) {
 								this.current = i;
 								break;
 							}
-						}	
-							
-				this.messageData.type = evt.detail.value;
+						}
+						this.messageData.type = evt.detail.value;
+					}else{
+						this.messageData.direction = evt.target.value;
+						console.log('---选择方向---',evt.target.value);
+					}				
+				
 			},
 			switchChange(e,type){
 				let val = e.detail.value;
@@ -107,11 +133,8 @@
 					msg:ranStr, //显示内容
 					icon:this.messageData.icon, //显示icon
 					mask:this.messageData.mask, //遮罩
-					time:this.messageData.time?this.timeNum:false //无限期时间
-/* 					customStyle:{ //自定义样式
-                        color:'#FFFFFF', //字体图标色
-                        backgroundColor:'rgba(0,0,0,.5)' //背景色
-					} */
+					time:this.messageData.time?this.timeNum:false, //无限期时间
+				    direction:this.messageData.direction //方向
 				})
 				let id = this.$refs.message.id; //获取弹窗id,需要在弹出后获取
 				if(this.messageData.time===false){

@@ -61,8 +61,10 @@
   word-break: break-all;
   word-wrap: break-word;
   padding: 10rpx 20rpx;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10rpx;
+  -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   margin-top: 25rpx;
   pointer-events: auto;
   background-color: transparent;
@@ -98,6 +100,10 @@
   -webkit-animation: messageAni .3s;
           animation: messageAni .3s;
 }
+.quick-message .quick-message-centre .quick-message-list .show-message-reverse {
+  -webkit-animation: messageAniReverse .3s;
+          animation: messageAniReverse .3s;
+}
 @-webkit-keyframes messageAni {
 0% {
     opacity: 0;
@@ -106,8 +112,8 @@
 }
 100% {
     opacity: 1;
-    -webkit-transform: translate(0, 0);
-            transform: translate(0, 0);
+    -webkit-transform: translate(0, 0rpx);
+            transform: translate(0, 0rpx);
 }
 }
 @keyframes messageAni {
@@ -118,8 +124,32 @@
 }
 100% {
     opacity: 1;
-    -webkit-transform: translate(0, 0);
-            transform: translate(0, 0);
+    -webkit-transform: translate(0, 0rpx);
+            transform: translate(0, 0rpx);
+}
+}
+@-webkit-keyframes messageAniReverse {
+0% {
+    opacity: 0;
+    -webkit-transform: translate(0, 60rpx);
+            transform: translate(0, 60rpx);
+}
+100% {
+    opacity: 1;
+    -webkit-transform: translate(0, 0rpx);
+            transform: translate(0, 0rpx);
+}
+}
+@keyframes messageAniReverse {
+0% {
+    opacity: 0;
+    -webkit-transform: translate(0, 60rpx);
+            transform: translate(0, 60rpx);
+}
+100% {
+    opacity: 1;
+    -webkit-transform: translate(0, 0rpx);
+            transform: translate(0, 0rpx);
 }
 }
 .quick-message .quick-message-centre .quick-message-list .default-message {
