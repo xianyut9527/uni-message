@@ -95,10 +95,7 @@
 				break;
 				default:
 			}
-			this.msgList.map((item,index)=>{  //清空之前动画
-				item.class = item.class.replace(/(show-message)(-reverse)?/,''); 
-				return item;
-			})
+			this.direction!=='top'&&this.msgList.length?this.msgList[0].class = '':'';
 			setTimeout(()=>{
 				this.direction==='top'?this.msgList.push(options):this.msgList.unshift(options);
 				this.closeInfo[options.id] = options;
@@ -163,7 +160,6 @@
 						item.class = '';
 						return item;
 					})
-					console.log(this.count.start);
 					let msgListLen = this.msgList.length-1;
 					if(this.direction==='top'){
 						this.msgList.splice(0,this.count.start);
