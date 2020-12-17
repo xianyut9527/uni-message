@@ -81,10 +81,9 @@ export default {
 | icon        |   boolean/string   |  true |  true/fasle/success/info/...  |消息提示icon详情参见https://uniapp.dcloud.io/component/icon 默认为true根据消息类型系统默认icon |
 | mask         |   boolean           |   false    |   true/false    |  消息提示遮罩,打开后需要等上一个消息关闭后才能继续点击或其他事件行为        |
 | time        |   boolean/number   |  3000 |  true/fasle/number  | 消息提示时间 true为默认3000毫秒，false为关闭时间 (单位毫秒)|
-| customStyle         |   object           |   {}    |   {...}    |  自定义样式,可根据自己需求进行样式改变,(注意这里的fontSize,和color也会改变icon的大小及颜色,如果你需要icon自定义可以配置iconSize和iconColor进行单独设置)|
+| customStyle         |   object           |   {}    |   {...}    |  自定义样式,可根据自己需求进行样式改变,(注意这里的fontSize(单位rpx),和color也会改变icon的大小及颜色,如果你需要icon自定义可以配置iconSize和iconColor进行单独设置)|
 | iconSize   |   number   |  16 |  number  | icon大小 (优先级最高 单位px) |
 | iconColor   |   string   |  默认为消息提示类型主题色 |  string  | icon颜色 (优先级最高) |
-
 
 
 ### 图片 Images
