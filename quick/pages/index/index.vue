@@ -134,7 +134,7 @@
 					icon:this.messageData.icon, //显示icon
 					mask:this.messageData.mask, //遮罩
 					time:this.messageData.time?this.timeNum:false, //无限期时间
-				    direction:this.messageData.direction //方向
+				    direction:this.messageData.direction, //方向
 				})
 				let id = this.$refs.message.id; //获取弹窗id,需要在弹出后获取
 				if(this.messageData.time===false){
