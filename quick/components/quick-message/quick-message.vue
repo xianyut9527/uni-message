@@ -178,8 +178,7 @@
 
 			},
 			createId() { //创建id
-				this.id++;
-				return this.id;
+				return ++this.id;
 			},
 			close(id) { //关闭指定层
 				if (id && this.closeInfo[id]) {
